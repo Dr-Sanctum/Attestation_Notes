@@ -1,20 +1,28 @@
 from Viever import Viever
 from Notes_list import Notes_list
+from Saver import Saver
+from Opener import Opener
 
 
 class Presenter:
     filter_notes = False
     filter_year = 0
-    def __init__(self, notes_list: Notes_list, viever: Viever):
+
+    def __init__(self, notes_list: Notes_list, viever: Viever, saver: Saver, opener: Opener):
         self.notes_list = notes_list
         self.viever = viever
+        self.saver = saver
+        self.opener = opener
 
     def run(self):
+        self.notes_list.list_notes = self.opener.open_json()
         while True:
+            self.saver.save_json(self.notes_list)
             if self.filter_notes == False:
                 self.viever.viev_notes_list(self.notes_list)
             else:
-                self.viever.filter_viev_notes_list(self.notes_list, self.filter_year)
+                self.viever.filter_viev_notes_list(
+                    self.notes_list, self.filter_year)
             number = self.viever.menu()
             # Добавление заметки
             if number == 1:

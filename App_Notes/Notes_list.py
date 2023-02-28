@@ -1,4 +1,5 @@
 import datetime
+import jsonpickle
 from Notes import Notes
 
 
@@ -16,10 +17,10 @@ class Notes_list:
         for i in range(len(self.list_notes)):
             self.list_notes[i].id_notes = i + 1
         self.id = self.id - 1
-    
+
     def rewrite_notes(self, number_notes: int, title: str, body_notes: str):
         self.list_notes.insert(number_notes,
-            Notes(self.id, title, body_notes, datetime.datetime.today()))
+                               Notes(self.id, title, body_notes, datetime.datetime.today()))
 
     def get_len(self):
         return len(self.list_notes)
@@ -33,3 +34,5 @@ class Notes_list:
                 result += f'{self.list_notes[i]}'
         return result
 
+    def toJSON(self):
+        return jsonpickle.encode(self.list_notes)
